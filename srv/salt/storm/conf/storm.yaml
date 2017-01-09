@@ -1,0 +1,53 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+########### These MUST be filled in for a storm configuration
+
+# zookeeper config
+ storm.zookeeper.servers:
+     - "DataNode1"
+     - "DataNode2"
+     - "DataNode3"
+ storm.zookeeper.port: 2181
+ storm.zookeeper.root: "/storm"
+
+# HA
+# nimbus.seeds: ["NameNode1","NameNode2"]
+ nimbus.seeds: ["NameNode1"]
+
+#The Nimbus and Supervisor daemons require a directory on the local disk to store
+#small amounts of state (like jars, confs, and things like that). You should create that directory
+#on each machine, give it proper permissions, and then fill in the directory location using this config.
+ storm.local.dir: "/home/hadoop/storm-data"
+
+#For each worker machine, you configure how many workers run on that machine with this config. 
+#Each worker uses a single port for receiving messages, and this setting defines which ports are open for use. 
+#If you define five ports here, then Storm will allocate up to five workers to run on this machine. 
+#If you define three ports, Storm will only run up to three. 
+#By default, this setting is configured to run 4 workers on the ports 6700, 6701, 6702, and 6703.  
+
+ supervisor.slots.ports:
+    - 6700
+    - 6701
+    - 6702
+    - 6703
+
+ storm.health.check.dir: "healthchecks"
+ storm.health.check.timeout.ms: 5000
+
+# storm ui
+ ui.host: NameNode1
+ ui.port: 18080

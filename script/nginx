@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# chkconfig: - 85 15
+# description: Nginx is a World Wide Web server.
+# processname: nginx
+
+nginx=/usr/local/nginx/sbin/nginx
+conf=/usr/local/nginx/conf/nginx.conf
+case $1 in
+start)
+echo -n "Starting Nginx now...\n"
+$nginx -c $conf
+echo "Nginx is started!\n"
+;;
+stop)
+echo -n "Stopping Nginx now...\n"
+killall -9 nginx
+echo "Nginx is stopped!\n"
+;;
+test)
+$nginx -t -c $conf
+;;
+restart)
+$0 stop
+$0 start
+;;
+status)
+ps xa | grep nginx | grep -v grep | grep -v status
+;;
+*)
+echo -n "Usage: $0 {start|restart|stop|test|status}"
+;;
+esac
